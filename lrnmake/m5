@@ -1,9 +1,0 @@
-thing_right := $(wildcard *.o)
-
-all: one two three four
-
-# Works as you would expect! In this case, it does nothing.
-three: $(thing_right)
-
-# Same as rule three
-four: $(wildcard *.o)

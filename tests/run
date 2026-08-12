@@ -1,2 +1,0 @@
-make -f m
-./runtests | more
