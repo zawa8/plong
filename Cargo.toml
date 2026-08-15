@@ -1,0 +1,8 @@
+[package]
+name = "plong"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "plong"
+path = "src/main.rs"
