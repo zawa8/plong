@@ -24,6 +24,10 @@ s8 _meksimun_saiz_of_wlyu_array_ ;
 s8 main() {
 
 cplong._meksimun_saiz_of_wlyu_array_ = 8 ;
+cplong bign("-5V,FF,5V.4.4.5V");
+//bign.is_negetiw is 1 so negetiw 
+//bign.start_prisizxn_leyr is -2
+//bign is -(5V*100+FF*10+5V+4/10+4/100+5V/1000)
 
 cplong a([5V],1,0)//same as float a= 5.75
 // a.wlyu is [5V] , a.start_prisizxn_leyr is 1
