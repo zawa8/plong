@@ -1,8 +1,20 @@
 [package]
-name = "plong"
+name = "cplong"
 version = "0.1.0"
 edition = "2021"
+description = "hskii arbitrary-precision number system (base-256 with hex-pair digits)"
+license = "MIT"
+authors = ["zawa8"]
+repository = "https://github.com/zawa8/plong"
+
+[lib]
+name = "cplong"
+path = "src/lib.rs"
 
 [[bin]]
-name = "plong"
+name = "cplong"
 path = "src/main.rs"
+
+[dependencies]
+
+[dev-dependencies]
