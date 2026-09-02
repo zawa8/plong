@@ -22,7 +22,7 @@ impl Cplong {
     pub const MAX_SIZE: usize = 1024;
 
     /// Create new Cplong from string like "-2P,5V,67,5V.67.78.89"
-    pub fn from_str(s: &str) -> Result<Self, CplongError> {
+    pub fn parse(s: &str) -> Result<Self, CplongError> {
         let s = s.trim();
         if s.is_empty() {
             return Err(CplongError::EmptyInput);
@@ -47,7 +47,7 @@ impl Cplong {
         } else {
             int_part
                 .split(',')
-                .map(|d| parse_hex_pair(d))
+                .map(parse_hex_pair)
                 .collect::<Result<Vec<u8>, CplongError>>()?
         };
 
@@ -57,7 +57,7 @@ impl Cplong {
                 vec![]
             } else {
                 f.split('.')
-                    .map(|d| parse_hex_pair(d))
+                    .map(parse_hex_pair)
                     .collect::<Result<Vec<u8>, CplongError>>()?
             }
         } else {
@@ -239,7 +239,7 @@ mod tests {
 
     #[test]
     fn test_parse_simple() {
-        let a = Cplong::from_str("5V").unwrap();
+        let a = Cplong::parse("5V").unwrap();
         assert_eq!(a.wlyu, vec![0x5C]);
         assert_eq!(a.start_prisizxn_leyr, 0);
         assert!(!a.is_negetiw);
@@ -247,14 +247,15 @@ mod tests {
 
     #[test]
     fn test_parse_negative() {
-        let b = Cplong::from_str("-6").unwrap();
-        assert_eq!(b.wlyu, vec![0x06]);
+        let b = Cplong::parse("-6").unwrap();
+        assert_eq!(b.wlyu, vec![6]);
+        assert_eq!(b.start_prisizxn_leyr, 0);
         assert!(b.is_negetiw);
     }
 
     #[test]
     fn test_parse_complex() {
-        let c = Cplong::from_str("-2P,5V.67").unwrap();
+        let c = Cplong::parse("-2P,5V.67").unwrap();
         assert_eq!(c.wlyu, vec![0x2E, 0x5C, 0x67]);
         assert_eq!(c.start_prisizxn_leyr, 1);
         assert!(c.is_negetiw);
@@ -262,8 +263,8 @@ mod tests {
 
     #[test]
     fn test_subtraction() {
-        let a = Cplong::from_str("5V").unwrap();
-        let b = Cplong::from_str("6").unwrap();
+        let a = Cplong::parse("5V").unwrap();
+        let b = Cplong::parse("6").unwrap();
         let d = a.sub(&b).unwrap();
         assert!(d.is_negetiw);
     }
