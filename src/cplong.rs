@@ -206,14 +206,21 @@ impl Cplong {
 /// Parse hex pair like "2P" -> 46
 fn parse_hex_pair(s: &str) -> Result<u8, CplongError> {
     let chars: Vec<char> = s.trim().chars().collect();
-    if chars.len() != 2 {
-        return Err(CplongError::InvalidFormat(s.to_string()));
+    
+    match chars.len() {
+        1 => {
+            // Single digit: 0-15
+            let d = Digit::from_char(chars[0]).ok_or(CplongError::InvalidCharacter(chars[0]))?;
+            Ok(d.value())
+        }
+        2 => {
+            // Hex pair: 0-255
+            let high = Digit::from_char(chars[0]).ok_or(CplongError::InvalidCharacter(chars[0]))?;
+            let low = Digit::from_char(chars[1]).ok_or(CplongError::InvalidCharacter(chars[1]))?;
+            Ok((high.value() << 4) | low.value())
+        }
+        _ => Err(CplongError::InvalidFormat(s.to_string()))
     }
-
-    let high = Digit::from_char(chars[0]).ok_or(CplongError::InvalidCharacter(chars[0]))?;
-    let low = Digit::from_char(chars[1]).ok_or(CplongError::InvalidCharacter(chars[1]))?;
-
-    Ok((high.value() << 4) | low.value())
 }
 
 fn digit_to_char(d: u8) -> char {
