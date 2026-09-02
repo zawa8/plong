@@ -16,6 +16,12 @@ rustc-ice-*.txt
 # MSVC Windows build artifacts (Debugging information)
 *.pdb
 
+/target
+Cargo.lock
+*.swp
+*.swo
+.idea/
+.vscode/
 
 
 # eclipse
