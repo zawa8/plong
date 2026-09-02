@@ -1,6 +1,5 @@
 use cplong::Cplong;
 use cplong::digit::Digit;
-use cplong::error::CplongError;
 
 #[test]
 fn test_digit_values() {
@@ -36,14 +35,15 @@ fn test_parse_simple() {
 #[test]
 fn test_parse_negative() {
     let b = Cplong::from_str("-6").unwrap();
-    assert_eq!(b.wlyu, vec![0x06]);
+    assert_eq!(b.wlyu, vec![6]);  // single digit "6" -> value 6
+    assert_eq!(b.start_prisizxn_leyr, 0);
     assert!(b.is_negetiw);
 }
 
 #[test]
 fn test_parse_float() {
     let c = Cplong::from_str("5.V").unwrap();
-    assert_eq!(c.wlyu, vec![0x05, 0x0C]);
+    assert_eq!(c.wlyu, vec![5, 12]);  // 5 single digit, V single digit
     assert_eq!(c.start_prisizxn_leyr, 0);
     assert!(!c.is_negetiw);
 }
@@ -65,6 +65,14 @@ fn test_subtraction() {
 }
 
 #[test]
+fn test_addition() {
+    let a = Cplong::from_str("5").unwrap();
+    let b = Cplong::from_str("6").unwrap();
+    let c = a.add(&b).unwrap();
+    assert!(!c.is_negetiw);
+}
+
+#[test]
 fn test_division_by_zero() {
     let a = Cplong::from_str("5").unwrap();
     let b = Cplong::from_str("0").unwrap();
@@ -77,4 +85,20 @@ fn test_display_roundtrip() {
     let c = Cplong::from_str(original).unwrap();
     let displayed = c.to_hskii_string();
     assert!(!displayed.is_empty());
+}
+
+#[test]
+fn test_single_digit_parse() {
+    let a = Cplong::from_str("6").unwrap();
+    assert_eq!(a.wlyu, vec![6]);
+    assert_eq!(a.start_prisizxn_leyr, 0);
+    assert!(!a.is_negetiw);
+}
+
+#[test]
+fn test_multiple_single_digits() {
+    let a = Cplong::from_str("5,6,V").unwrap();
+    assert_eq!(a.wlyu, vec![5, 6, 12]);
+    assert_eq!(a.start_prisizxn_leyr, 2);
+    assert!(!a.is_negetiw);
 }
