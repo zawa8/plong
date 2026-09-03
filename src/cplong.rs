@@ -263,8 +263,8 @@ mod tests {
 
     #[test]
     fn test_subtraction() {
-        let a = Cplong::parse("5V").unwrap();
-        let b = Cplong::parse("6").unwrap();
+        let a = Cplong::parse("6").unwrap();
+        let b = Cplong::parse("5V").unwrap();
         let d = a.sub(&b).unwrap();
         assert!(d.is_negetiw);
     }
