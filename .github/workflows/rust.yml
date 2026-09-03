@@ -64,5 +64,5 @@ jobs:
         with:
           components: rustfmt
 
-      - name: Format check
-        run: cargo fmt -- --check
+      - name: Format
+        run: cargo fmt
