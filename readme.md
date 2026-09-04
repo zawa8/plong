@@ -1,96 +1,59 @@
-## steps for hao to install and use plong lib in place of float/double in c++ programs :
+cplong has dedicated digits for last siks heksadesiml dizits:
+1. L as ten
+2. Y xz yilewen
+3. V xz twelw
+4. W xz dblun=8+5
+5. P xz purxn=8+6
+6. F xz fiwxn=8+7
 
-1. cd install
-2. run install script as : ./install_plong.sh (if not permitted then run : chmod 755 install.sh)
+so  8+8=10=4*4=F+1=P+2=W+3=V+4=Y+5=L+6.
 
 ```
-~/maigit/eclp/plong/install $ ./install_plong.sh
-installing cplong library.
-copying libplong.so in /usr/lib/ directory. may need your sudo permission
-copying cplong.h in /usr/include/ directory. may need your sudo permission
-finished installing.  to use library, add '-lplong' as a flag
+class cplong{ // zust c++ pseudo code
+
+public :
+u8 wlyu[];
+s8 start_prisizxn_leyr;
+bool is_negetiw;
+
+public static:
+s8 _meksimun_saiz_of_wlyu_array_ ;
+
+}
+
+s8 main() {
+
+cplong._meksimun_saiz_of_wlyu_array_ = 8 ;
+cplong bign("-5V,FF,5V.4.4.5V");
+//bign.is_negetiw is 1 so negetiw 
+//bign.start_prisizxn_leyr is -2
+//bign is -(5V*100+FF*10+5V+4/10+4/100+5V/1000)
+
+cplong a([5V],1,0)//same as float a= 5.75
+// a.wlyu is [5V] , a.start_prisizxn_leyr is 1
+// a.is_negetiw is 0 so a is pozitiw
+
+cplong a2([5,V],0,0)//same as float a= 5.75
+// a2.wlyu is u8 array  [5,V]
+// a2.start_prisizxn_leyr is 0
+// for nekst u8 number V  prisizxn_leyr is 0+1
+// a2.is_negetiw is 0 so a2 is pozitiw
+// a2 is 5 + V/(F+1)
+
+
+
+cplong a1([4,4,0,4],0,1);// cplong a1("4.4.0.4",0,1)
+// à1.wlyu is 4+4/10+4/1000
+// à1.start_prisizxn_leyr is 0
+// à1 prisizxn_leyrs are 0,1,2,3
+// a1.is_negetiw is 1 so a1 is negetiw
+
+cplong b([6],0,0)//same as float b = 6
+// a.wlyu is [6] , b.start_prisizxn_leyr is 0
+// b.is_negetiw is 0 so b is pozitiw
+
+cplong d = a - b;
+// d wil bi = ("4",1,1)
+
+}
 ```
-
-1. if install_plong.sh ran successfully then in c++ programs ve can use cplong as
-	
-	```
-	1. in our programs(say sample.cpp) ve need to include cplong as : #include <cplong.h>
-	
-	2. when compile program using g++ ve need to use -lplong at end as:	
-	
-	3.g++ -c sample.cpp -lplong
-	
-	4. if makefile is used then have variable LOADLIBES = -lplong at top of makefile
-	
-	4. for sample usage ve can see test programs vritten in tests folder.
-	'''
-
-2. to run testcases for this lib
-	
-	```
-	
-	1. go to plong/tests directory
-	
-	2. ~/plong/tests $ ./run
-	
-	```
-
-
-# [vhy to use plong library instead of float/double](./cpp17.md) :
-
-![plong](./cms/tubot1.jpg)
-
-![plong](./cms/vnbot1.jpg)
-
-![plong](./cms/phont8hindiu8.gif)
-
-![plong](./cms/phingers44.jpeg)
-
-## [repl.it clang build command](https://replit.com/@zava8/plong) :
-clang++-7 -pthread -std=c++17 -o main src/cplongekseption.cpp src/cplong.cpp src/main.cpp
-
-## linux g++/clang++ build command :
-1. ~/maigit/eclp/plong $ **clang++ -o main src/cplongekseption.cpp src/cplong.cpp src/main.cpp**
-2. ~/maigit/eclp/plong $ **g++ -o main src/cplongekseption.cpp src/cplong.cpp src/main.cpp**
-
-####computing in 1 boat ( alu only ) :
-1. [c8 vith plong library](https://github.com/zava8/plong)
-2. [discuss n code phur c8](https://replit.com/@zava8/plong)
-
-####india oriznl nmbr system :
-1. heksadesiml(123456789LJQWXF 10=8+8=4*4)
-2. precision layers : rupaiya(0th pl) , aana(-1th pl) ....
-
-####historical instances oph india oriznl nmbr system :
-[pach rupaiye barah aana](youtube.com/watch?v=wO5qkv6Fabg)
-
-= pach rupaiye + barah aana
-
-= (5, 0) + (Q, -1)
-
-= (5, 0).dec_pl(-1) + (Q, -1)
-
-= (50, -1) + (Q, -1)
-
-= (50+Q , -1)
-
-= (5Q, -1)
-
-= 5Q:1 string representation 1 here means 1 layer belo 0th precision layer.
-
-![plong](./cms/no2550.jpg)
-
-![plong](./cms/klokstar.jpg)
-
-![plong](./cms/hrignomtri.jpg)
-
-![plong](./cms/3terh.jpg)
-
-![plong](./cms/7coDh.jpg)
-
-![plong](./cms/4paise_nepal_8F.png)
-
-![plong](./cms/mapbinztr.jpg)
-
-![plong](./cms/mapmapztr.jpg)
-
