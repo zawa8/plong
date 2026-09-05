@@ -1,5 +1,5 @@
-use cplong::digit::Digit;
 use cplong::Cplong;
+use cplong::digit::Digit;
 
 #[test]
 fn test_digit_values() {
@@ -50,9 +50,9 @@ fn test_parse_float() {
 
 #[test]
 fn test_parse_complex() {
-    let c = Cplong::parse("-2P,5V,67,5V.67.78.89").unwrap();
+    let c = Cplong::parse("-2P.5V.67.5V.67.78.89").unwrap();
     assert_eq!(c.wlyu, vec![0x2E, 0x5C, 0x67, 0x5C, 0x67, 0x78, 0x89]);
-    assert_eq!(c.start_prisizxn_leyr, 3);
+    assert_eq!(c.start_prisizxn_leyr, 0);
     assert!(c.is_negetiw);
 }
 
@@ -97,8 +97,8 @@ fn test_single_digit_parse() {
 
 #[test]
 fn test_multiple_single_digits() {
-    let a = Cplong::parse("5,6,V").unwrap();
+    let a = Cplong::parse("5.6.V").unwrap();
     assert_eq!(a.wlyu, vec![5, 6, 12]);
-    assert_eq!(a.start_prisizxn_leyr, 2);
+    assert_eq!(a.start_prisizxn_leyr, 0);
     assert!(!a.is_negetiw);
 }
