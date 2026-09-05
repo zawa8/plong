@@ -42,10 +42,10 @@ impl Cplong {
         };
 
         let main_trim = main_part.trim();
-        let (is_negetiw, digits_str) = if main_trim.starts_with('-') {
-            (true, main_trim[1..].trim())
-        } else if main_trim.starts_with('+') {
-            (false, main_trim[1..].trim())
+        let (is_negetiw, digits_str) = if let Some(stripped) = main_trim.strip_prefix('-') {
+            (true, stripped.trim())
+        } else if let Some(stripped) = main_trim.strip_prefix('+') {
+            (false, stripped.trim())
         } else {
             (false, main_trim)
         };
@@ -75,14 +75,14 @@ impl Cplong {
         let mut parts: Vec<String> = Vec::with_capacity(self.wlyu.len());
         for &b in &self.wlyu {
             if b < 16 {
-                let c = nibble_to_hskii((b & 0x0F) as u8);
+                let c = nibble_to_hskii(b & 0x0F);
                 parts.push(c.to_string());
             } else {
                 let hi = (b >> 4) & 0x0F;
                 let lo = b & 0x0F;
                 let mut s = String::with_capacity(2);
-                s.push(nibble_to_hskii(hi as u8));
-                s.push(nibble_to_hskii(lo as u8));
+                s.push(nibble_to_hskii(hi));
+                s.push(nibble_to_hskii(lo));
                 parts.push(s);
             }
         }
@@ -185,7 +185,7 @@ impl Cplong {
         }
         
         let result_is_neg = self.is_negetiw != other.is_negetiw;
-        let max_layers = 16;
+        let max_layers = 32;
         
         let dividend = Self::abs_to_base16(self);
         let divisor = Self::abs_to_base16(other);
@@ -229,11 +229,11 @@ impl Cplong {
         let mut carry = 0u16;
         let max_len = a.wlyu.len().max(b.wlyu.len());
         
-        for i in 0..max_len {
+        for (i, item) in result.iter_mut().enumerate().take(max_len) {
             let da = if i < a.wlyu.len() { a.wlyu[i] as u16 } else { 0 };
             let db = if i < b.wlyu.len() { b.wlyu[i] as u16 } else { 0 };
             let sum = da + db + carry;
-            result[i] = (sum & 0xFF) as u8;
+            *item = (sum & 0xFF) as u8;
             carry = sum >> 8;
         }
         
@@ -254,16 +254,16 @@ impl Cplong {
         let mut result = vec![0u8; a.wlyu.len()];
         let mut borrow = 0i16;
         
-        for i in 0..a.wlyu.len() {
+        for (i, item) in result.iter_mut().enumerate().take(a.wlyu.len()) {
             let da = a.wlyu[i] as i16;
             let db = if i < b.wlyu.len() { b.wlyu[i] as i16 } else { 0 };
             let diff = da - db - borrow;
             if diff < 0 {
                 borrow = 1;
-                result[i] = (diff + 256) as u8;
+                *item = (diff + 256) as u8;
             } else {
                 borrow = 0;
-                result[i] = diff as u8;
+                *item = diff as u8;
             }
         }
         
