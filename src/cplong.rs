@@ -170,7 +170,7 @@ impl Cplong {
         let mut wlyu: Vec<u8> = result_digits.iter().map(|&x| x as u8).collect();
         wlyu.reverse();
         
-        let new_start = self.start_prisizxn_leyr + other.start_prisizxn_leyr + 1;
+        let new_start = self.start_prisizxn_leyr + other.start_prisizxn_leyr;
         
         Ok(Cplong {
             wlyu,
